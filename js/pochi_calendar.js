@@ -60,9 +60,9 @@ calendarApp.controller('CalendarCtrl', function($scope) {
       height: 450,
       editable: true,
       header: {
-        left: 'title',
-        center: '',
-        right: 'today prev, next'
+        left: 'today prev, next',
+        center :'title',
+        right: 'month agendaWeek agendaDay'
       },
       dayClick: $scope.alertEventOnClick,
       eventDrop: $scope.alertOnDrop,
