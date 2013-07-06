@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html ng-app='calendarApp'>
+  <head>
+    <title>Calendar app</title>
+    <link rel='stylesheet' type='text/css' href='css/fullcalendar.css'></link>
+    <link rel='stylesheet' type='text/css' href='css/original-fullcalendar.css'></link>
+    <link rel='stylesheet' type='text/css' href='css/original-fullcalendar.css'></link>
+
+    <script src="js/jquery/jquery-2.0.3.min.js"></script>
+    <script src="js/jquery-ui/v1.10.3/ui/jquery-ui.js"></script>
+    <script src="js/angular/v1.0.7/angular.min.js"></script>
+    <script src="js/jquery-ui/v1.10.3/fullcalendar.min.js"></script>
+    <script src="js/angular-ui/calendar.js"></script>
+    <script src="js/pochi_calendar.js"></script>
+  </head>
+
+
+  <body ng-controller='CalendarCtrl'>
+    <div ui-calendar='uiConfig.calendar' ng-model='eventSources' config='uiConfig.calendar' calendar='myCalendar'>
+    </div>
+  </body>
+</html>
