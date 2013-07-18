@@ -31,6 +31,7 @@ angular.module('ui.calendar', [])
       scope.init = function(){
         var options = { eventSources: sources };
         angular.extend(options, uiCalendarConfig, attrs.uiCalendar ? scope.$parent.$eval(attrs.uiCalendar) : {});
+        console.log(options);
         scope.calendar.fullCalendar(options);
       };
       scope.init();
@@ -40,6 +41,7 @@ angular.module('ui.calendar', [])
       //  arraySource array of function that returns array of objects to watch
       //  tokenFn function(object) that returns the token for a given object
       var changeWatcher = function(arraySource, tokenFn) {
+        console.log(arraySource);
         var self;
         var getTokens = function() {
           var array = angular.isFunction(arraySource) ? arraySource() : arraySource;

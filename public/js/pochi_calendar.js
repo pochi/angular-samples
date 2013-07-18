@@ -1,3 +1,5 @@
+// Angularの設計課題
+
 'use strict';
 
 var calendarApp = angular.module('calendarApp', ['ui.calendar']);
@@ -8,16 +10,59 @@ calendarApp.controller('CalendarCtrl', function($scope) {
   var m = date.getMonth();
   var y = date.getFullYear();
 
+  var current_date = new Date(y,m,1);
+  var initial_events = [];
+
+
+  initial_events.push({title: "ダイレクトチャネルGr",
+                       start: new Date(y, m, 1),
+                       url: 'http://google.com',
+                       className: 'pochi-event',
+                       borderColor: 'black',
+                       backgroundColor: 'green' });
+  initial_events.push({title: "ダイレクトチャネルGr",
+                       start: new Date(y, m, 1),
+                       url: 'http://google.com',
+                       className: 'pochi-event' });
+  initial_events.push({title: "ダイレクトチャネルGr",
+                       start: new Date(y, m, 1),
+                       url: 'http://google.com',
+                       className: 'pochi-event' });
+  initial_events.push({title: "ダイレクトチャネルGr",
+                       start: new Date(y, m, 1),
+                       url: 'http://google.com',
+                       className: 'pochi-event' });
+  initial_events.push({title: "ダイレクトチャネルGr",
+                       start: new Date(y, m, 1),
+                       url: 'http://google.com',
+                       className: 'pochi-event' });
+  initial_events.push({title: "ダイレクトチャネルGr",
+                       start: new Date(y, m, 1),
+                       url: 'http://google.com',
+                       className: 'pochi-event' });
+  initial_events.push({title: "ダイレクトチャネルGr",
+                       start: new Date(y, m, 1),
+                       url: 'http://google.com',
+                       className: 'pochi-event' });
+  initial_events.push({title: "ダイレクトチャネルGr",
+                       start: new Date(y, m, 1),
+                       url: 'http://google.com',
+                       className: 'pochi-event' });
+
+
+  // [TODO] Redmineと連携してライセンス数を取得
+  while(current_date.getMonth() == m) {
+    initial_events.push({title: "ダイレクトチャネルGr",
+                         start: new Date(y, m, current_date.getDate()),
+                         url: 'http://google.com',
+                         className: 'pochi-event' });
+    current_date.setDate(current_date.getDate()+1);
+  }
+
+  $scope.events = initial_events;
   $scope.eventSource = {
-
+    className: "pochi-event"
   };
-
-  $scope.events = [
-    {
-      title: "sample",
-      start: new Date(y,m,1)
-    }
-  ];
 
   $scope.eventsF = function(start, end, callback) {
     var s = new Date(start).getTime() / 1000;
@@ -34,7 +79,7 @@ calendarApp.controller('CalendarCtrl', function($scope) {
 
   $scope.alertEventOnClick = function(date, allDay, event, view) {
     $scope.$apply(function(){
-      $scope.alertMessage = 'event';
+      $scope.alertMessage = '予約が完了しました';
     });
   };
 
@@ -54,6 +99,12 @@ calendarApp.controller('CalendarCtrl', function($scope) {
     $scope.myCalendar.fullCalendar('changeView', view);
   };
 
+  $scope.selectEvent = function(start, end, allDay) {
+    $scope.$apply(function() {
+      console.log(start);
+    });
+  };
+
   // http://iw3.me/156/
   $scope.uiConfig = {
     calendar:{
@@ -62,13 +113,27 @@ calendarApp.controller('CalendarCtrl', function($scope) {
       header: {
         left: 'today prev, next',
         center :'title',
-        right: 'month agendaWeek agendaDay'
+        right: ''
       },
       dayClick: $scope.alertEventOnClick,
       eventDrop: $scope.alertOnDrop,
       eventResize: $scope.alertOnResize,
+      select: function(start,end,allDay) {
+        var title = prompt("Ticket ID or something");
+        if (title) {
+          $scope.myCalendar.fullCalendar("renderEvent", {
+            title: title,
+            start: start,
+            end: end,
+            allDay: true
+          }, true);
+        }
+        $scope.myCalendar.fullCalendar("unselect");
+      },
       weekends: false,
       firstDay: 1,
+      selectable: true,
+      selectHelper: true,
       // 月名称
       monthNames: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
       // 月略称
@@ -98,4 +163,13 @@ calendarApp.controller('CalendarCtrl', function($scope) {
   };
 
   $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
+});
+
+// ng-model以外のイベントはこっちでやる。
+$(function(){
+  $("td.fc-day").hover(function() {
+    $(this).addClass("fc-state-highlight");
+  }, function(){
+    $(this).removeClass("fc-state-highlight");
+  });
 });
